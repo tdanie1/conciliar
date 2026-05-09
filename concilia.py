@@ -78,7 +78,7 @@ if empresa_file and banco_file:
         st.subheader("Resumen de conciliación")
         resumen = pd.DataFrame({
             "Concepto": ["Total movimientos empresa", "Total movimientos banco", "Diferencias detectadas"],
-            "Total": [total_empresa, total_banco, diferencia_total]
+            "Total": [f"{total_empresa:,.2f}", f"{total_banco:,.2f}", f"{diferencia_total:,.2f}"]
         })
         st.table(resumen)
 
