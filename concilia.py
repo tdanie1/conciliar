@@ -75,7 +75,7 @@ if empresa_file and banco_file:
         total_banco = df_banco["Monto"].sum()
         diferencia_total = total_empresa - total_banco
 
-        """ COMMENT st.subheader("Resumen de conciliación")
+        st.subheader("Resumen de conciliación")
         resumen = pd.DataFrame({
             "Concepto": ["Total movimientos empresa", "Total movimientos banco", "Diferencias detectadas"],
             "Total": [f"{total_empresa:,.2f}", f"{total_banco:,.2f}", f"{diferencia_total:,.2f}"]
@@ -91,38 +91,8 @@ if empresa_file and banco_file:
         # st.dataframe(diferencias) CORRECCIÓN
         st.dataframe(
             diferencias.style.format({"Monto": "{:,.2f}"}).set_properties(**{"text-align": "right"})
-        ) COMMENT """
-# DE AQUI
-st.subheader("Resumen de conciliación")
+        )
 
-# Crear resumen con formato de dos decimales
-resumen = pd.DataFrame({
-    "Concepto": ["Total movimientos empresa", "Total movimientos banco", "Diferencias detectadas"],
-    "Total": [total_empresa, total_banco, diferencia_total]
-})
-
-# Aplicar formato y alineación a la derecha
-resumen_styled = resumen.style.format({"Total": "{:,.2f}"}).set_table_styles(
-    [{"selector": "th", "props": [("text-align", "center")]},
-     {"selector": "td", "props": [("text-align", "right")]}]
-)
-
-st.table(resumen_styled)
-
-st.subheader("Detalle de diferencias")
-
-# Ajustes de formato en diferencias
-diferencias["Fecha"] = diferencias["Fecha"].dt.strftime("%Y-%m-%d")
-diferencias["Monto"] = diferencias["Monto"].apply(lambda x: f"{x:,.2f}")
-
-# Aplicar formato y alineación a la derecha en diferencias
-diferencias_styled = diferencias.style.set_table_styles(
-    [{"selector": "th", "props": [("text-align", "center")]},
-     {"selector": "td", "props": [("text-align", "right")]}]
-)
-
-st.dataframe(diferencias_styled)
-# HASTA AQUI
 
         # Observaciones
         diferencias["Observación"] = diferencias["Origen"].apply(
