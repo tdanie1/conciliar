@@ -83,6 +83,8 @@ if empresa_file and banco_file:
         st.table(resumen)
 
         st.subheader("Detalle de diferencias")
+        # Formatear fecha para mostrar solo YYYY-MM-DD
+        diferencias["Fecha"] = diferencias["Fecha"].dt.strftime("%Y-%m-%d")
         st.dataframe(diferencias)
 
         # Observaciones
