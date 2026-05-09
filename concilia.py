@@ -57,12 +57,17 @@ if empresa_file and banco_file:
         st.dataframe(diferencias)
 
         # Exportar resultados
-        diferencias["Observación"] = diferencias["Origen"].apply(
-            lambda x: "Revisar registro en ERP" if x=="Empresa" else "Verificar extracto bancario"
-        )
+        from io import BytesIO
 
-        csv = diferencias.to_csv(index=False).encode("utf-8")
-        excel = diferencias.to_excel("diferencias.xlsx", index=False)
+# Exportar CSV
+csv = diferencias.to_csv(index=False).encode("utf-8")
+st.download_button("Descargar diferencias en CSV", csv, "diferencias.csv", "text/csv")
 
-        st.download_button("Descargar diferencias en CSV", csv, "diferencias.csv", "text/csv")
-        st.download_button("Descargar diferencias en Excel", open("diferencias.xlsx","rb").read(), "diferencias.xlsx")
+# Exportar Excel en memoria
+output = BytesIO()
+with pd.ExcelWriter(output, engine="openpyxl") as writer:
+    diferencias.to_excel(writer, index=False, sheet_name="Diferencias")
+excel_data = output.getvalue()
+
+st.download_button("Descargar diferencias en Excel", excel_data, "diferencias.xlsx")
+
