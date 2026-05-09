@@ -85,6 +85,8 @@ if empresa_file and banco_file:
         st.subheader("Detalle de diferencias")
         # Formatear fecha para mostrar solo YYYY-MM-DD
         diferencias["Fecha"] = diferencias["Fecha"].dt.strftime("%Y-%m-%d")
+        # Formatear monto con dos decimales
+        diferencias["Monto"] = diferencias["Monto"].apply(lambda x: f"{x:,.2f}")
         st.dataframe(diferencias)
 
         # Observaciones
