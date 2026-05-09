@@ -80,14 +80,18 @@ if empresa_file and banco_file:
             "Concepto": ["Total movimientos empresa", "Total movimientos banco", "Diferencias detectadas"],
             "Total": [f"{total_empresa:,.2f}", f"{total_banco:,.2f}", f"{diferencia_total:,.2f}"]
         })
-        st.table(resumen)
+        # st.table(resumen) CORRECCIÓN
+        st.table(resumen.style.format({"Total": "{:,.2f}"}).set_properties(**{"text-align": "right"}))
 
         st.subheader("Detalle de diferencias")
         # Formatear fecha para mostrar solo YYYY-MM-DD
         diferencias["Fecha"] = diferencias["Fecha"].dt.strftime("%Y-%m-%d")
         # Formatear monto con dos decimales
         diferencias["Monto"] = diferencias["Monto"].apply(lambda x: f"{x:,.2f}")
-        st.dataframe(diferencias)
+        # st.dataframe(diferencias) CORRECCIÓN
+        st.dataframe(
+            diferencias.style.format({"Monto": "{:,.2f}"}).set_properties(**{"text-align": "right"})
+        )
 
         # Observaciones
         diferencias["Observación"] = diferencias["Origen"].apply(
