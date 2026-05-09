@@ -56,8 +56,8 @@ if empresa_file and banco_file:
         st.subheader("Detalle de diferencias")
         st.dataframe(diferencias)
 
-        # Exportar resultados
-        from io import BytesIO
+       
+from io import BytesIO
 
 # Exportar CSV
 csv = diferencias.to_csv(index=False).encode("utf-8")
@@ -70,4 +70,3 @@ with pd.ExcelWriter(output, engine="openpyxl") as writer:
 excel_data = output.getvalue()
 
 st.download_button("Descargar diferencias en Excel", excel_data, "diferencias.xlsx")
-
